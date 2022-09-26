@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+
 // Components
 import App from './App';
+import UserList from './components/user/userList';
 import NavBar from './components/navbar';
 import Contact from './components/contact';
 import NotFound from './components/notfound';
@@ -20,6 +22,7 @@ root.render(
         <div className="container my-3">
             <Routes>
                 <Route path = "/" element = {<App/>} />
+                <Route path = "/users" element = {<UserList/>}/>
                 <Route path = "/contact" element = {<Contact/>}/>
                 <Route path = "*" element = {<NotFound/>}/>
             </Routes>
