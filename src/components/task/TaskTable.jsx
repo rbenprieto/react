@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // Components
 import TaskRow from "./taskrow";
-
+import TaskForm from "./taskform";
 
 const initialState = [
   { id: 1, name: "aprender programación", priority: 1, done: false },
@@ -16,35 +16,50 @@ const TaskTable = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-      // console.log("Iniciando");
-      setTasks(initialState);
+    // console.log("Iniciando");
+    setTasks(initialState);
   }, []);
 
+  const addNewTask = (newTaskName) => {
+    setTasks ([...tasks, {id: tasks.length +1, name: newTaskName, priority : 1, done:false }]);
+  };
+
   const toggleTask = (id) => {
-    console.log(id);
-    console.log("CLICK");
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, done: !task.done } : task
+      )
+    );
+  };
 
-};
+  const headerStyle = { textAlign: "center", verticalAlign: "middle" };
 
-  const headerStyle= { textAlign: "center", verticalAlign: "middle"};  
-  
   return (
     <div className="row">
-      <div className="col-md-4"></div>
+      <div className="col-md-4">
+        <TaskForm addNewTask = {addNewTask} />
+      </div>
       <div className="col-md-8">
         <div className="table-responsive">
           <table className="table">
             <thead>
               <tr>
                 {headers.map((header, index) => (
-                  <th style={ headerStyle} key={index}>{header}</th>
+                  <th style={headerStyle} key={index}>
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-                {tasks.map((task, index) =>(
-                    <TaskRow task={task} index={index} key={task.id} toggleTask={toggleTask}/>
-                ))}
+              {tasks.map((task, index) => (
+                <TaskRow
+                  task={task}
+                  index={index}
+                  key={task.id}
+                  toggleTask={toggleTask}
+                />
+              ))}
             </tbody>
           </table>
         </div>
